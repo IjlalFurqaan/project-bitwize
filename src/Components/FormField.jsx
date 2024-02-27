@@ -113,16 +113,16 @@ const FormField = () => {
 
 
   const firebaseConfig = {
-    apiKey: "AIzaSyBnOnbtGMdwgXm4l1s-IK0x5s4sSLl8-50",
-    authDomain: "projectdata-18799.firebaseapp.com",
-    databaseURL: "https://projectdata-18799-default-rtdb.firebaseio.com",
-    projectId: "projectdata-18799",
-    storageBucket: "projectdata-18799.appspot.com",
-    messagingSenderId: "316012398649",
-    appId: "1:316012398649:web:961954c5e4d0884a44e5e8",
-    measurementId: "G-K85TGKQS63"
-
+    apiKey: "AIzaSyAeI4-hGPZ3f6MdfWfHFz6rgDzPbimTNBM",
+    authDomain: "react-test-machine.firebaseapp.com",
+    databaseURL: "https://react-test-machine-default-rtdb.firebaseio.com",
+    projectId: "react-test-machine",
+    storageBucket: "react-test-machine.appspot.com",
+    messagingSenderId: "47853279420",
+    appId: "1:47853279420:web:4b10c8219bc9a3dbd598b9",
+    measurementId: "G-MPNTWBJTB5"
   };
+  
 
   firebase.initializeApp(firebaseConfig);
 
