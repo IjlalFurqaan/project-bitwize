@@ -328,7 +328,7 @@ const FormField = () => {
                   </div>
 
                   <div>
-                    <input type="file" name={`fileUpload${index}`} onChange={(e) => handleAdditionalFileChange(e, index)} />
+                    <input type="file" name={`fileUpload${index}`} accept={file.type === "JPG" ? ".jpg" : (file.type === "JPEG" ? ".jpeg" : ".pdf")} onChange={(e) => handleAdditionalFileChange(e, index)} />
                     {formData.additionalFiles[index].name && (
                       <button type="button" onClick={() => handleCancelFile(index)}>Cancel</button>
                     )}
