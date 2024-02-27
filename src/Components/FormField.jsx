@@ -17,7 +17,6 @@ const FormField = () => {
     fileName: "",
     fileType: "",
     additionalFiles: [{ name: "", type: "" }],
-
   });
 
   const [errors, setErrors] = useState({});
@@ -60,14 +59,13 @@ const FormField = () => {
   };
 
   const handleAdditionalFileChange = (e, index) => {
-    const { name, value} = e.target;
+    const { name, value } = e.target;
     const updatedAdditionalFiles = [...formData.additionalFiles];
     
     updatedAdditionalFiles[index] = {
       ...updatedAdditionalFiles[index],
       [name]: value,
     };
-    console.log(updatedAdditionalFiles);
     setFormData({
       ...formData,
       additionalFiles: updatedAdditionalFiles,
@@ -100,17 +98,6 @@ const FormField = () => {
       additionalFiles: updatedAdditionalFiles,
     });
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const isValid = validateForm();
-  //   if (isValid) {
-  //     console.log("Form Submitted", formData);
-  //   } else {
-  //     console.log("Form Validation Failed");
-  //   }
-  // };
-
 
   const firebaseConfig = {
     apiKey: "AIzaSyAeI4-hGPZ3f6MdfWfHFz6rgDzPbimTNBM",
@@ -145,19 +132,13 @@ const FormField = () => {
     }
   };
 
-
-
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
-    // console.log("name & value ",name , value);
   };
-
-
 
   const handleCheckboxChange = (e) => {
     const { name, value } = e.target;
@@ -195,8 +176,6 @@ const FormField = () => {
     return () => firebase.database().ref('formData').off('value');
   }, []);
 
-
-
   return (
     <div>
       <h1>REACT JS MACHINE TEST</h1>
@@ -211,6 +190,7 @@ const FormField = () => {
               value={formData.firstName}
               placeholder="Enter your first name"
               onChange={handleChange}
+              required // Adding required attribute
             />
             {errors.firstName && <div className="error">{errors.firstName}</div>}
           </div>
@@ -222,6 +202,7 @@ const FormField = () => {
               value={formData.lastName}
               placeholder="Enter your last name"
               onChange={handleChange}
+              required // Adding required attribute
             />
             {errors.lastName && <div className="error">{errors.lastName}</div>}
           </div>
@@ -235,6 +216,7 @@ const FormField = () => {
               value={formData.email}
               placeholder="Enter your email"
               onChange={handleChange}
+              required // Adding required attribute
             />
             {errors.email && <div className="error">{errors.email}</div>}
           </div>
@@ -245,6 +227,7 @@ const FormField = () => {
               name="birthDate"
               value={formData.birthDate}
               onChange={handleChange}
+              required // Adding required attribute
             />
             {errors.birthDate && <div className="error">{errors.birthDate}</div>}
           </div>
@@ -259,6 +242,7 @@ const FormField = () => {
               value={formData.street1}
               placeholder="Enter street 1"
               onChange={handleChange}
+              required // Adding required attribute
             />
           </div>
           <div>
@@ -269,6 +253,7 @@ const FormField = () => {
               value={formData.street2}
               placeholder="Enter street 2"
               onChange={handleChange}
+              required // Adding required attribute
             />
           </div>
         </div>
@@ -321,7 +306,6 @@ const FormField = () => {
           <div className="upload-section">
             <label>Upload Documents: </label>
             <div className="file-inputs">
-              {/* Initial set of additional file inputs */}
               {formData.additionalFiles.map((file, index) => (
                 <div key={index} className="form-section row">
                   <div>
@@ -329,18 +313,20 @@ const FormField = () => {
                     <input
                       type="text"
                       name="fileName"
-                      value={formData.Filename}
+                      value={formData.fileName}
                       placeholder="Enter file name"
                       onChange={(e) => handleAdditionalFileChange(e, index)}
+                      required // Adding required attribute
                     />
                   </div>
                   <div>
                     <label>Type of File:<span className="mandatory">*</span> </label>
                     <select
                       name="fileType"
-                      value={formData.FileType}
+                      value={formData.fileType}
                       onChange={(e) => handleAdditionalFileChange(e, index)}
                       className="custom-select"
+                      required // Adding required attribute
                     >
                       <option value="">Select type</option>
                       <option value="PDF">PDF</option>
@@ -348,16 +334,12 @@ const FormField = () => {
                       <option value="JPEG">JPEG</option>
                     </select>
                   </div>
-
                   <div>
                     <input type="file" name={`fileUpload${index}`} onChange={(e) => handleAdditionalFileChange(e, index)} />
-                    {formData.additionalFiles[index].name && ( // Display cancel button only if a file is selected
+                    {formData.additionalFiles[index].name && (
                       <button type="button" onClick={() => handleCancelFile(index)}>Cancel</button>
                     )}
                   </div>
-
-
-                  {/* Show delete button only for dynamically added additional file inputs */}
                   {index > 0 && (
                     <div>
                       <button type="button" onClick={() => handleDeleteFile(index)}>Delete</button>
@@ -365,7 +347,6 @@ const FormField = () => {
                   )}
                 </div>
               ))}
-              {/* Button to add more file inputs */}
               <div>
                 <button type="button" onClick={handleAddMoreFiles}>+</button>
               </div>
@@ -385,13 +366,11 @@ const FormField = () => {
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Date Of Birth</th>
-                <th>Residential Addredd</th>
-                <th>Permanent Addredd</th>
+                <th>Residential Address</th>
+                <th>Permanent Address</th>
                 <th>File Name</th>
                 <th>File Type</th>
-                <th>upload file</th>
-
-                {/* Add more headers as needed */}
+                <th>Upload File</th>
               </tr>
             </thead>
             <tbody>
@@ -406,7 +385,6 @@ const FormField = () => {
                   <td>{record.additionalFiles[0].fileName}</td>
                   <td>{record.additionalFiles[0].fileType}</td>
                   <td>{record.additionalFiles[0].fileUpload0}</td>
-                  {/* Add more table data cells as needed */}
                 </tr>
               ))}
             </tbody>
@@ -416,4 +394,5 @@ const FormField = () => {
     </div>
   );
 };
+
 export default FormField;
