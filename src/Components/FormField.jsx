@@ -14,8 +14,6 @@ const FormField = () => {
     sameAsResidential: false,
     permanentStreet1: "",
     permanentStreet2: "",
-    fileName: "",
-    fileType: "",
     additionalFiles: [{ name: "", type: "" }],
   });
 
@@ -61,7 +59,6 @@ const FormField = () => {
   const handleAdditionalFileChange = (e, index) => {
     const { name, value } = e.target;
     const updatedAdditionalFiles = [...formData.additionalFiles];
-    
     updatedAdditionalFiles[index] = {
       ...updatedAdditionalFiles[index],
       [name]: value,
@@ -72,7 +69,6 @@ const FormField = () => {
     });
   };
 
-
   const handleCancelFile = (index) => {
     const updatedAdditionalFiles = [...formData.additionalFiles];
     updatedAdditionalFiles[index] = { name: "", type: "" };
@@ -81,7 +77,6 @@ const FormField = () => {
       additionalFiles: updatedAdditionalFiles,
     });
   };
-
 
   const handleAddMoreFiles = () => {
     setFormData({
@@ -110,16 +105,13 @@ const FormField = () => {
     measurementId: "G-MPNTWBJTB5"
   };
   
-
   firebase.initializeApp(firebaseConfig);
-
   const database = firebase.database();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
-      // Save form data to Firebase Realtime Database
       database.ref('formData').push(formData)
         .then(() => {
           console.log("Form data submitted to Firebase:", formData);
@@ -312,8 +304,8 @@ const FormField = () => {
                     <label>File Name:<span className="mandatory">*</span></label>
                     <input
                       type="text"
-                      name="fileName"
-                      value={formData.fileName}
+                      name="name"
+                      value={file.name}
                       placeholder="Enter file name"
                       onChange={(e) => handleAdditionalFileChange(e, index)}
                       required // Adding required attribute
@@ -322,8 +314,8 @@ const FormField = () => {
                   <div>
                     <label>Type of File:<span className="mandatory">*</span> </label>
                     <select
-                      name="fileType"
-                      value={formData.fileType}
+                      name="type"
+                      value={file.type}
                       onChange={(e) => handleAdditionalFileChange(e, index)}
                       className="custom-select"
                       required // Adding required attribute
@@ -334,12 +326,14 @@ const FormField = () => {
                       <option value="JPEG">JPEG</option>
                     </select>
                   </div>
+
                   <div>
                     <input type="file" name={`fileUpload${index}`} onChange={(e) => handleAdditionalFileChange(e, index)} />
                     {formData.additionalFiles[index].name && (
                       <button type="button" onClick={() => handleCancelFile(index)}>Cancel</button>
                     )}
                   </div>
+
                   {index > 0 && (
                     <div>
                       <button type="button" onClick={() => handleDeleteFile(index)}>Delete</button>
@@ -366,11 +360,11 @@ const FormField = () => {
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Date Of Birth</th>
-                <th>Residential Address</th>
-                <th>Permanent Address</th>
+                <th>Residential Addredd</th>
+                <th>Permanent Addredd</th>
                 <th>File Name</th>
                 <th>File Type</th>
-                <th>Upload File</th>
+                <th>upload file</th>
               </tr>
             </thead>
             <tbody>
@@ -382,8 +376,8 @@ const FormField = () => {
                   <td>{record.birthDate}</td>
                   <td>{record.street1 + " - " + record.street2}</td>
                   <td>{record.permanentStreet1 + " - " + record.permanentStreet2}</td>
-                  <td>{record.additionalFiles[0].fileName}</td>
-                  <td>{record.additionalFiles[0].fileType}</td>
+                  <td>{record.additionalFiles[0].name}</td>
+                  <td>{record.additionalFiles[0].type}</td>
                   <td>{record.additionalFiles[0].fileUpload0}</td>
                 </tr>
               ))}
